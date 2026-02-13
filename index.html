@@ -14,6 +14,9 @@
       --yes: #ff3b7a;
       --envBase: #ff85a2;
       --envFlap: #ff5d8f;
+      --fur: #A67B5B;
+      --furDark: #8B6243;
+      --furLight: #E6CCB2;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,12 +27,13 @@
       justify-content: center;
       align-items: center;
       background: radial-gradient(circle at top, var(--bg2), var(--bg1));
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
       overflow: hidden;
     }
 
     #confettiCanvas { position: fixed; inset: 0; z-index: 9999; pointer-events: none; }
 
+    /* ENVELOPE LOGIC */
     .envelope-wrapper { position: relative; cursor: pointer; perspective: 1000px; z-index: 10; }
     .envelope {
       position: relative;
@@ -52,11 +56,12 @@
     .pocket { position: absolute; bottom: 0; width: 100%; height: 100%; background: var(--envBase); border-radius: 0 0 15px 15px; z-index: 3; }
     .letter-seal { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); font-size: 40px; z-index: 5; transition: 0.4s; }
 
+    /* CARD REVEAL */
     .card {
       position: fixed;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%) scale(0.2);
-      width: min(380px, 92vw);
+      width: min(390px, 92vw);
       background: var(--card);
       padding: 30px 20px;
       border-radius: 30px;
@@ -71,24 +76,19 @@
     .envelope-wrapper.open .flap { transform: rotateX(180deg); z-index: 1; }
     .envelope-wrapper.open .card { transform: translate(-50%, -50%) scale(1); opacity: 1; z-index: 100; pointer-events: all; }
 
-    /* PENGUIN ANIMATIONS */
-    .art { width: 200px; margin: 0 auto 5px; display: block; overflow: visible; animation: idleWobble 3s infinite ease-in-out; }
-    
-    @keyframes idleWobble {
-      0%, 100% { transform: rotate(-2deg); }
-      50% { transform: rotate(2deg); }
-    }
+    /* BOUTIQUE BEAR ANIMATIONS */
+    .art { width: 220px; margin: 0 auto 5px; display: block; overflow: visible; animation: plushSway 4s infinite ease-in-out; }
+    @keyframes plushSway { 0%, 100% { transform: rotate(-0.8deg); } 50% { transform: rotate(0.8deg); } }
+    @keyframes heartPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+    .animated-heart {}
 
-    @keyframes heartPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-    .animated-heart { animation: heartPulse 1.5s infinite ease-in-out; transform-origin: 160px 180px; }
-
-    h1 { font-size: 22px; color: #333; margin: 10px 0; font-weight: 800; min-height: 60px; display: flex; align-items: center; justify-content: center; }
+    h1 { font-size: 24px; color: #333; margin: 10px 0; font-weight: 800; min-height: 60px; display: flex; align-items: center; justify-content: center; }
     
     .button-zone { position: relative; height: 120px; margin-top: 10px; touch-action: none; }
-    button { position: absolute; padding: 12px 28px; font-size: 18px; font-weight: 800; border-radius: 999px; border: none; cursor: pointer; box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+    button { position: absolute; padding: 12px 28px; font-size: 18px; font-weight: 800; border-radius: 999px; border: none; cursor: pointer; box-shadow: 0 2px 2px rgba(0,0,0,0.1); }
 
-    #yesBtn { top: 50%; left: 15%; background: var(--yes); color: #fff; z-index: 1; transform: translateY(-50%) scale(1); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    #noBtn { top: 50%; left: 60%; background: #eee; color: #444; z-index: 2; transform: translateY(-50%); }
+    #yesBtn { top: 50%; left: 15%; background: var(--yes); color: #fff; z-index: 1; transform: translateY(-50%) scale(1); transition: transform 0.3s; }
+    #noBtn { top: 50%; left: 60%; background: #eee; color: #444; z-index: 10; transform: translateY(-50%); }
 
     .result { display: none; }
     .fireworks { width: 100%; border-radius: 20px; margin-top: 15px; }
@@ -108,43 +108,65 @@
       
       <main class="card" id="mainCard" onclick="event.stopPropagation()">
         <div id="quizContent">
-          <!-- UPDATED CUTIER PENGUIN -->
-          <svg class="art" viewBox="0 0 320 320">
-            <!-- Shadow -->
-            <ellipse cx="160" cy="285" rx="60" ry="10" fill="black" opacity="0.05" />
-            <!-- Chubby Body -->
-            <circle cx="160" cy="170" r="95" fill="#444" />
-            <!-- Kawaii Face Patch -->
-            <path d="M160 85 C 110 85, 75 120, 75 170 C 75 235, 110 260, 160 260 C 210 260, 245 235, 245 170 C 245 120, 210 85, 160 85" fill="white" />
-            
-            <!-- Stubby Hugging Arms -->
-            <path d="M80 180 Q 45 200, 85 235" fill="none" stroke="#444" stroke-width="22" stroke-linecap="round" />
-            <path d="M240 180 Q 275 200, 235 235" fill="none" stroke="#444" stroke-width="22" stroke-linecap="round" />
+          <!-- UPDATED DETAILED SITTING TOY BEAR -->
+<svg class="art" viewBox="0 0 320 360" style="height: 240px;">
+  <!-- Ground Shadow -->
+  <ellipse cx="160" cy="345" rx="110" ry="12" fill="black" opacity="0.05" />
+  
+  <!-- Ears -->
+  <circle cx="100" cy="100" r="32" fill="var(--fur)" />
+  <circle cx="100" cy="100" r="18" fill="var(--furLight)" />
+  <circle cx="220" cy="100" r="32" fill="var(--fur)" />
+  <circle cx="220" cy="100" r="18" fill="var(--furLight)" />
+  
+  <!-- Chubby Sitting Torso (Rounded Bottom) -->
+  <path d="M 160 170 
+           C 110 170, 75 195, 75 260 
+           C 75 330, 245 330, 245 260 
+           C 245 195, 210 170, 160 170 Z" fill="var(--fur)" />
 
-            <!-- Large Kawaii Eyes -->
-            <circle cx="130" cy="150" r="10" fill="black" />
-            <circle cx="190" cy="150" r="10" fill="black" />
-            <circle cx="134" cy="145" r="4" fill="white" />
-            <circle cx="194" cy="145" r="4" fill="white" />
+  <!-- FORWARD FACING PAWS (Adjusted for rounded belly) -->
+  <g transform="translate(55, 255)">
+    <ellipse cx="40" cy="65" rx="40" ry="45" fill="var(--fur)" stroke="var(--furDark)" stroke-width="1" />
+    <ellipse cx="40" cy="72" rx="26" ry="30" fill="var(--furLight)" opacity="0.7" />
+    <circle cx="28" cy="45" r="7" fill="var(--furLight)" opacity="0.5" />
+    <circle cx="40" cy="40" r="7" fill="var(--furLight)" opacity="0.5" />
+    <circle cx="52" cy="45" r="7" fill="var(--furLight)" opacity="0.5" />
+  </g>
+  <g transform="translate(185, 255)">
+    <ellipse cx="40" cy="65" rx="40" ry="45" fill="var(--fur)" stroke="var(--furDark)" stroke-width="1" />
+    <ellipse cx="40" cy="72" rx="26" ry="30" fill="var(--furLight)" opacity="0.7" />
+    <circle cx="28" cy="45" r="7" fill="var(--furLight)" opacity="0.5" />
+    <circle cx="40" cy="40" r="7" fill="var(--furLight)" opacity="0.5" />
+    <circle cx="52" cy="45" r="7" fill="var(--furLight)" opacity="0.5" />
+  </g>
 
-            <!-- CUTER ROUNDED BEAK (Heart-like) -->
-            <rect x="152" y="165" width="16" height="12" rx="8" fill="#FFB347" />
+  <!-- Head -->
+  <path d="M160 85 C 115 85, 88 105, 88 145 C 88 185, 115 205, 160 205 C 205 205, 232 185, 232 145 C 232 105, 205 85, 160 85 Z" fill="var(--fur)" />
+  
+  <!-- Snout Area -->
+  <ellipse cx="160" cy="172" rx="42" ry="32" fill="var(--furLight)" />
+  <path d="M148 156 Q160 170 172 156 Z" fill="#3D2B1F" />
+  
+  <!-- Kawaii Safety Eyes -->
+  <circle cx="130" cy="140" r="8" fill="#1a1a1a" />
+  <circle cx="190" cy="140" r="8" fill="#1a1a1a" />
+  <circle cx="132" cy="136" r="3" fill="white" />
+  <circle cx="192" cy="136" r="3" fill="white" />
 
-            <!-- Soft Blush -->
-            <circle cx="105" cy="180" r="12" fill="#FFD1DC" opacity="0.8" />
-            <circle cx="215" cy="180" r="12" fill="#FFD1DC" opacity="0.8" />
+  <!-- Hugging Arms -->
+  <path d="M95 195 Q 55 220, 100 255" fill="none" stroke="var(--furDark)" stroke-width="26" stroke-linecap="round" />
+  <path d="M95 195 Q 55 220, 100 255" fill="none" stroke="var(--fur)" stroke-width="22" stroke-linecap="round" />
+  <path d="M225 195 Q 265 220, 220 255" fill="none" stroke="var(--furDark)" stroke-width="26" stroke-linecap="round" />
+  <path d="M225 195 Q 265 220, 220 255" fill="none" stroke="var(--fur)" stroke-width="22" stroke-linecap="round" />
 
-            <!-- Pulsing Heart -->
-            <g class="animated-heart">
-              <path d="M160 245 C 130 215, 95 215, 95 185 C 95 160, 125 155, 160 185 C 195 155, 225 160, 225 185 C 225 215, 190 215, 160 245 Z" fill="#FF3B7A" stroke="white" stroke-width="3" />
-            </g>
+  <!-- Pulsing Heart -->
+  <g class="animated-heart">
+    <path d="M160 280 C 130 250, 95 250, 95 215 C 95 185, 128 180, 160 215 C 192 180, 225 185, 225 215 C 225 250, 190 250, 160 280 Z" fill="#FF3B7A" stroke="white" stroke-width="3" />
+  </g>
+</svg>
 
-            <!-- Rounded Feet -->
-            <circle cx="125" cy="265" r="15" fill="#FFB347" />
-            <circle cx="195" cy="265" r="15" fill="#FFB347" />
-          </svg>
-
-          <h1 id="questionText">Natalie, will you be my valentine?</h1>
+          <h1>Natalie, will you be my valentine?</h1>
           <section class="button-zone" id="zone">
             <button id="yesBtn">Yes</button>
             <button id="noBtn">No</button>
@@ -165,15 +187,16 @@
     const env = document.getElementById('envWrapper');
     const yesBtn = document.getElementById('yesBtn');
     const noBtn = document.getElementById('noBtn');
-    const questionText = document.getElementById('questionText');
     const zone = document.getElementById('zone');
     const result = document.getElementById('result');
     const quizContent = document.getElementById('quizContent');
+    const questionText = document.querySelector('h1');
 
-    const noMessages = ["Wait, what? 🥺", "Are you sure? 💔", "Natalie, please? 🙏", "Think about it... 🐧", "Just click Yes! 💖"];
+    const noMessages = ["Wait, what? 🥺", "Are you sure? 💔", "Think about it... 🐧", "Just click Yes! 💖"];
     let msgIndex = 0;
 
     function openEnvelope() { env.classList.add('open'); }
+
     function celebrate() {
       const end = Date.now() + 3000;
       (function frame() {
@@ -195,12 +218,12 @@
         const yesCenterX = y.left - z.left + y.width / 2;
         const yesCenterY = y.top - z.top + y.height / 2;
         const dist = Math.hypot(newLeft + b.width/2 - yesCenterX, newTop + b.height/2 - yesCenterY);
-        if (dist > (y.width/2 + b.width/2 + 40)) isOverlapping = false;
+        if (dist > (y.width/2 + b.width/2 + 50)) isOverlapping = false;
       }
       noBtn.style.left = newLeft + "px";
       noBtn.style.top = newTop + "px";
-      if (yesScale < 1.5) {
-        yesScale += 0.1;
+      if (yesScale < 1.4) {
+        yesScale += 0.08;
         yesBtn.style.transform = `translateY(-50%) scale(${yesScale})`;
       }
     }
